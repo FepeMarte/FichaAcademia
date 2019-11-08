@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FichaAcademia.AcessoDados;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Rotativa.AspNetCore;
 
 namespace FichaAcademia
 {
@@ -27,6 +29,20 @@ namespace FichaAcademia
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Contexto>(opcoes => opcoes.UseSqlServer(Configuration.GetConnectionString("Conexao")));
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddSession(opcoes => 
+            {
+                opcoes.IdleTimeout = TimeSpan.FromHours(1);
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(opcoes =>
+                {
+                    opcoes.LoginPath = "Administradores/Login";
+                });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -43,9 +59,12 @@ namespace FichaAcademia
                 app.UseHsts();
             }
 
+            app.UseSession();
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+
+            RotativaConfiguration.Setup(env);
 
             app.UseMvc(routes =>
             {
