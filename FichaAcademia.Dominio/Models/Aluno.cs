@@ -21,6 +21,8 @@ namespace FichaAcademia.Dominio.Models
         [Range(10, 150, ErrorMessage = "Peso inválida!")]
         public double peso { get; set; }
 
+        public int ObjetivoId { get; set; }
+        public Objetivo Objetivo { get; set; }
         public int ProfessorId { get; set; }
         public Professor Professor { get; set; }
 
