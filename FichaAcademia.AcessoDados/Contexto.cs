@@ -33,8 +33,6 @@ namespace FichaAcademia.AcessoDados
             modelBuilder.ApplyConfiguration(new ListaExercicioMap());
             modelBuilder.ApplyConfiguration(new ObjetivoMap());
             modelBuilder.ApplyConfiguration(new ProfessorMap());
-
-
         }
     }
 }
