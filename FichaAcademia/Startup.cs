@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FichaAcademia.AcessoDados;
+using FichaAcademia.AcessoDados.Interfaces;
+using FichaAcademia.AcessoDados.Repositorios;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +32,8 @@ namespace FichaAcademia
         {
             services.AddDbContext<Contexto>(opcoes => opcoes.UseSqlServer(Configuration.GetConnectionString("Conexao")));
 
+            services.AddTransient<ICategoriaExercicioRepositorio, CategoriaExercicioRepositorio>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSession(opcoes => 
@@ -40,7 +44,7 @@ namespace FichaAcademia
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(opcoes =>
                 {
-                    opcoes.LoginPath = "Administradores/Login";
+                    opcoes.LoginPath = "/Administradores/Login";
                 });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -70,7 +74,7 @@ namespace FichaAcademia
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=CategoriasExercicios}/{action=Index}/{id?}");
             });
         }
     }
