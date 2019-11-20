@@ -12,7 +12,7 @@ namespace FichaAcademia.Dominio.Models
         [Required(ErrorMessage = "Campo obrigatório!")]
         [StringLength(50,ErrorMessage ="Use menos caracteres!")]
 
-        [Remote("CategoriaExiste","CategoriaExercicios", AdditionalFields = "CategoriaExercicioId")]
+        [Remote("CategoriaExiste","CategoriasExercicios", AdditionalFields = "CategoriaExercicioId")]
         public string Nome { get; set; }
 
         public ICollection<Exercicio> Exercicios { get; set; }

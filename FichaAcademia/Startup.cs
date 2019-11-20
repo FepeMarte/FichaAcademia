@@ -33,6 +33,7 @@ namespace FichaAcademia
             services.AddDbContext<Contexto>(opcoes => opcoes.UseSqlServer(Configuration.GetConnectionString("Conexao")));
 
             services.AddTransient<ICategoriaExercicioRepositorio, CategoriaExercicioRepositorio>();
+            services.AddTransient<IAdministradorRepositorio, AdministradorRepositorio>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -74,7 +75,7 @@ namespace FichaAcademia
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=CategoriasExercicios}/{action=Index}/{id?}");
+                    template: "{controller=Administradores}/{action=Login}/{id?}");
             });
         }
     }
