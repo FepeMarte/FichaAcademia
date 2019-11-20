@@ -34,6 +34,7 @@ namespace FichaAcademia
 
             services.AddTransient<ICategoriaExercicioRepositorio, CategoriaExercicioRepositorio>();
             services.AddTransient<IAdministradorRepositorio, AdministradorRepositorio>();
+            services.AddTransient<IExercicioRepositorio, ExercicioRepositorio>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
